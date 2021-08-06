@@ -2,20 +2,26 @@ const WalletProvider = require("truffle-hdwallet-provider");
 const Web3 = require("web3");
 const { abi, bytecode } = require("./compile");
 
+
+console.log("abi: ", abi)
+// console.log("bytecode: ", bytecode)
+
 const walletProvider = new WalletProvider(
   "bitter repair century thumb such kit huge math joke genre eagle beef", 
-  "https://ropsten.infura.io/v3/23d30c81486d4e23a798041525425d26"
+  "https://ropsten.infura.io/v3/653764b5bbc54a1a814c5c4eb97e4076"
 );
 
 const web3 = new Web3(walletProvider);
 
 let accounts, contract;
 
-const CONTRACT_ADDRESS = "0xcD516702f8Cb2752e7bAa24B1d3C2fa57ACb79BB";
+// const CONTRACT_ADDRESS = "0xcD516702f8Cb2752e7bAa24B1d3C2fa57ACb79BB";
 
 async function deploy() {
   try {
+    // console.log(web3.eth)
     accounts = await web3.eth.getAccounts();
+
     console.log("accounts: ", accounts);
     const balance = await web3.eth.getBalance(accounts[0]);
 
@@ -23,25 +29,14 @@ async function deploy() {
     console.log("account balance: ", balance);
 
 
-    contract = await new web3.eth.Contract(abi)
-      .deploy({ data: bytecode })
-      .send({ from: accounts[0], gas: "1000000" });
+    contract = await new web3.eth.Contract(JSON.parse(abi))
+      .deploy({ data: bytecode, arguments: [["0xEDD468DC605118be3b4dE36e2C975302121C2def", "0x03772Cd233dbd4F0871Ff82378a2eC74Cf3DC089"]]})
+      .send({ from: accounts[0], gas: "5000000" });
 
-    // console.log(contract);
-    // contract = await new web3.eth.Contract(abi, CONTRACT_ADDRESS);
-
-    console.log("deployed contract address: ", contract.options.address);
-
-    // const voted = await contract.methods.tails().call()
-
-    
-    // const callbackMessage = await contract.methods.setMessage("Modified Message").send({ from: accounts[0] });
-    // console.log("callbackMessage: ", callbackMessage);
-
-    console.log("message: ", voted )
+    console.log("contract address: ", contract.options.address)
   }
   catch(err) {
-    
+    console.error(err)
   }
 }
 

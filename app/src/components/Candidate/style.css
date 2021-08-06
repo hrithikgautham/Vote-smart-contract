@@ -1,0 +1,26 @@
+.vote-main {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+  background-color: grey;
+  color: #222222;
+  padding: 10px;
+  flex-basis: 0px;
+}
+
+.vote-main button {
+  border-radius: 5px;
+  background-color: #222222;
+  color: pink;
+  padding: 5px;
+  outline: none;
+}
+
+.vote-main button:hover {
+  cursor: pointer;
+  background-color: pink;
+  color: #222222;
+}
